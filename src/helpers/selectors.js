@@ -4,3 +4,13 @@ export function getAppointmentsForDay(state, day) {
   if(foundDay === undefined || state.days.length === 0) return [];
   return foundDay.appointments.map((id) => state.appointments[id]);
 }
+
+export function getInterview(state, interview) {
+  let interviewObj = null;
+  if(interview){
+    const student = interview.student
+    const interviewer = state.interviewers[interview.interviewer]
+    interviewObj = {student, interviewer}
+  }
+  return interviewObj
+}
