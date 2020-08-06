@@ -2,46 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DayList from "./DayList"
 import Appointments from "components/Appointment";
+import {getAppointmentsForDay} from "../helpers/selectors"
 import "components/Application.scss";
-
-const appointments = [
-  {
-    id: 1,
-    time: "12pm",
-  },
-  {
-    id: 2,
-    time: "1pm",
-    interview: {
-      student: "Lydia Miller-Jones",
-      interviewer: {
-        id: 1,
-        name: "Sylvia Palmer",
-        avatar: "https://i.imgur.com/LpaY82x.png",
-      }
-    }
-  },
-  {
-    id: 3,
-    time: "2pm",
-  },
-  {
-    id: 4,
-    time: "3pm",
-    interview: {
-      student: "Simon Jung",
-      interviewer: {
-        id: 5,
-        name: "Sven Jones",
-        avatar: "https://i.imgur.com/twYrpay.jpg",
-      }
-    }
-  },
-  {
-    id: 5,
-    time: "4pm",
-  }
-];
 
 export default function Application(props) {
   const [state, setState] = useState({
@@ -50,10 +12,20 @@ export default function Application(props) {
     appointments: {}
   });
   const setDay = (day) => setState({ ...state, day });
-  const setDays = (days) => setState(prev => ({ ...prev, days }));;
+  // const setDays = (days) => setState(prev => ({ ...prev, days }));;
 
   useEffect(() => {
-    axios.get("/api/days").then(response => setDays(response.data));
+    //promise all ensures we get both data before we render because theyre very closely linked
+    Promise.all([
+      Promise.resolve(axios.get("/api/days")),
+      Promise.resolve(axios.get("/api/appointments")),
+      //Promise.resolve(axios.get("/api/interviewers")),
+    ]).then((all) => {
+      //...prev makes sure all data is not overwritten, then replacing data with data we retrieved with axios get request
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data
+        //,interviewers: all[2].data 
+      }));
+    });
   }, []);
 
   return (
@@ -75,7 +47,8 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {appointments.map((appointment) => {
+        {getAppointmentsForDay(state, state.day).map((appointment) => {
+          console.log(appointment);
           return <Appointments key={appointment.id} {...appointment} />;
         })}
         <Appointments key="last" time={"5pm"} />
