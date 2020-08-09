@@ -14,6 +14,7 @@ export default function useVisualMode(initial) {
   }
 
   function back() {
+    //update this to not modify the history
     if (history.length > 1) {
       history.pop()
     }
