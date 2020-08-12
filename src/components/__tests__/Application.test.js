@@ -6,7 +6,6 @@ import { render, cleanup, waitForElement, fireEvent, getByText, prettyDOM, getAl
 import Application from "components/Application";
 
 afterEach(cleanup);
-//this should clean the DOM after each test so it does not. if we test #2, 3, and 4 separately, they all pass. However when we reun together, after test 2 runs, a spot is removed so messed up data for the next test and it fails.
 
 describe("Application", () => {
 
