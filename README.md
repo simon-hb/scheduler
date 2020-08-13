@@ -1,5 +1,9 @@
 # Interview Scheduler
 
+## Screenshots
+!["Overview"](https://github.com/simon-hb/scheduler/blob/master/docs/overview.png?raw=true)
+!["Saving and Deleting"](https://github.com/simon-hb/scheduler/blob/master/docs/saving-deleting.png?raw=true)
+!["Cypress E2E Testing"](https://github.com/simon-hb/scheduler/blob/master/docs/cypress-test.png?raw=true)
 ## Description
 
 Scheduler is my fourth web application that I have made; first one I made using React. It allows users to schedule interviews, edit interviews, and delete interviews. The interviews are with made up teachers and students but it is very easy to imagine scenarios where this application could come in handy! Ex: doctor's office, counsellor, employer, etc. Please feel free to clone the application and try out the neat features yourself:
